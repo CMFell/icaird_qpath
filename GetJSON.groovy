@@ -3,7 +3,7 @@ import qupath.lib.io.GsonTools
 // Create an empty text file
 def path = buildFilePath(PROJECT_BASE_DIR, 'polygons.txt')
 def file = new File(path)
-file.text = ''
+file.text = '{"type": "FeatureCollection", "features": ['
 
 def gson = GsonTools.getInstance(true)
 
@@ -17,5 +17,7 @@ for (pathObject in getAllObjects()) {
         continue
     // Write the points; but beware areas, and also ellipses!
     file << gson.toJson(pathObject) << System.lineSeparator()
+    file << ','
 }
+file << ']}'
 print 'Done!'
